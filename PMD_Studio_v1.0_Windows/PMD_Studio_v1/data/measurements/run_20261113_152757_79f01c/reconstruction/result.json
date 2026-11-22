@@ -1,0 +1,84 @@
+{
+  "points": 180128,
+  "extent_x_mm": 53.99012727380856,
+  "extent_y_mm": 43.53860733062041,
+  "raw_pv_um": 832.0079716628446,
+  "detrended_pv_um": 189.04740786506895,
+  "detrended_rms_um": 44.182850149040995,
+  "gradient_edge_rms_um": 0.022719824975887655,
+  "plane_coeff": [
+    -0.012077187372573297,
+    0.007296490771457836,
+    0.5083099350517541
+  ],
+  "anchor_mm": 0.0,
+  "iterations": [
+    {
+      "iteration": 1,
+      "height_PV_mm": 0.5021774976763158,
+      "change_RMS_mm": 0.2151286184246743,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 2,
+      "height_PV_mm": 0.7014359487988627,
+      "change_RMS_mm": 0.08563649269688196,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 3,
+      "height_PV_mm": 0.7804822202924705,
+      "change_RMS_mm": 0.03410765320379235,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 4,
+      "height_PV_mm": 0.8118790076030259,
+      "change_RMS_mm": 0.013560657183944324,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 5,
+      "height_PV_mm": 0.8243170688602834,
+      "change_RMS_mm": 0.005417014314068219,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 6,
+      "height_PV_mm": 0.8292430372285325,
+      "change_RMS_mm": 0.0021637101814711286,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 7,
+      "height_PV_mm": 0.8312183725017341,
+      "change_RMS_mm": 0.0008481510853568916,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 8,
+      "height_PV_mm": 0.8320079716628446,
+      "change_RMS_mm": 0.0003343136312508805,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    }
+  ],
+  "sphere": {
+    "radius_mm": 2548.2486214492064,
+    "rms_um": 2.207252028224722,
+    "pv_um": 13.704880480872816
+  },
+  "note": "P0 reconstruction: shape and radius depend on geometry and assumed depth.",
+  "quadratic": {
+    "R1_mm": 2608.7601188898825,
+    "R2_mm": 2436.647791897137,
+    "rms_um": 0.7122839850029913
+  }
+}

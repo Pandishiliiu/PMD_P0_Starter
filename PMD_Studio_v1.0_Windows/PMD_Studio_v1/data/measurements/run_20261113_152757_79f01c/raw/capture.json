@@ -1,0 +1,470 @@
+{
+  "timestamp": "2026-11-13T15:29:12+08:00",
+  "mode": "sample",
+  "pattern_config": {
+    "freqs": [
+      1,
+      4,
+      16
+    ],
+    "brightness": 128,
+    "contrast": 100,
+    "screen_width_mm": 227.06,
+    "screen_height_mm": 157.79,
+    "expected_width": 2360,
+    "expected_height": 1640
+  },
+  "pattern_plan": [
+    {
+      "type": "black",
+      "name": "black"
+    },
+    {
+      "type": "white",
+      "name": "white"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 1,
+      "phase": 0,
+      "name": "x_f1_p0"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 1,
+      "phase": 1,
+      "name": "x_f1_p1"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 1,
+      "phase": 2,
+      "name": "x_f1_p2"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 1,
+      "phase": 3,
+      "name": "x_f1_p3"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 4,
+      "phase": 0,
+      "name": "x_f4_p0"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 4,
+      "phase": 1,
+      "name": "x_f4_p1"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 4,
+      "phase": 2,
+      "name": "x_f4_p2"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 4,
+      "phase": 3,
+      "name": "x_f4_p3"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 16,
+      "phase": 0,
+      "name": "x_f16_p0"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 16,
+      "phase": 1,
+      "name": "x_f16_p1"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 16,
+      "phase": 2,
+      "name": "x_f16_p2"
+    },
+    {
+      "type": "fringe",
+      "axis": "x",
+      "freq": 16,
+      "phase": 3,
+      "name": "x_f16_p3"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 1,
+      "phase": 0,
+      "name": "y_f1_p0"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 1,
+      "phase": 1,
+      "name": "y_f1_p1"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 1,
+      "phase": 2,
+      "name": "y_f1_p2"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 1,
+      "phase": 3,
+      "name": "y_f1_p3"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 4,
+      "phase": 0,
+      "name": "y_f4_p0"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 4,
+      "phase": 1,
+      "name": "y_f4_p1"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 4,
+      "phase": 2,
+      "name": "y_f4_p2"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 4,
+      "phase": 3,
+      "name": "y_f4_p3"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 16,
+      "phase": 0,
+      "name": "y_f16_p0"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 16,
+      "phase": 1,
+      "name": "y_f16_p1"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 16,
+      "phase": 2,
+      "name": "y_f16_p2"
+    },
+    {
+      "type": "fringe",
+      "axis": "y",
+      "freq": 16,
+      "phase": 3,
+      "name": "y_f16_p3"
+    }
+  ],
+  "exposure_us": 10000.0,
+  "demo": false,
+  "iPad_browser": {
+    "width": 2360,
+    "height": 1640,
+    "dpr": 2,
+    "viewport_w": 1180,
+    "viewport_h": 820,
+    "screen_w": 820,
+    "screen_h": 1180,
+    "standalone": true,
+    "visual_viewport_h": 820
+  },
+  "shots": [
+    {
+      "filename": "black.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 2.0,
+      "saturated_fraction": 0.0,
+      "index": 0
+    },
+    {
+      "filename": "white.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 203.0,
+      "saturated_fraction": 0.0,
+      "index": 1
+    },
+    {
+      "filename": "x_f1_p0.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 32.0,
+      "saturated_fraction": 0.0,
+      "index": 2
+    },
+    {
+      "filename": "x_f1_p1.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 144.0,
+      "saturated_fraction": 0.0,
+      "index": 3
+    },
+    {
+      "filename": "x_f1_p2.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 157.0,
+      "saturated_fraction": 0.0,
+      "index": 4
+    },
+    {
+      "filename": "x_f1_p3.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 108.0,
+      "saturated_fraction": 0.0,
+      "index": 5
+    },
+    {
+      "filename": "x_f4_p0.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 143.0,
+      "saturated_fraction": 0.0,
+      "index": 6
+    },
+    {
+      "filename": "x_f4_p1.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 140.0,
+      "saturated_fraction": 0.0,
+      "index": 7
+    },
+    {
+      "filename": "x_f4_p2.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 141.0,
+      "saturated_fraction": 0.0,
+      "index": 8
+    },
+    {
+      "filename": "x_f4_p3.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 143.0,
+      "saturated_fraction": 0.0,
+      "index": 9
+    },
+    {
+      "filename": "x_f16_p0.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 10
+    },
+    {
+      "filename": "x_f16_p1.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 11
+    },
+    {
+      "filename": "x_f16_p2.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 12
+    },
+    {
+      "filename": "x_f16_p3.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 13
+    },
+    {
+      "filename": "y_f1_p0.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 75.0,
+      "saturated_fraction": 0.0,
+      "index": 14
+    },
+    {
+      "filename": "y_f1_p1.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 151.0,
+      "saturated_fraction": 0.0,
+      "index": 15
+    },
+    {
+      "filename": "y_f1_p2.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 156.0,
+      "saturated_fraction": 0.0,
+      "index": 16
+    },
+    {
+      "filename": "y_f1_p3.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 85.0,
+      "saturated_fraction": 0.0,
+      "index": 17
+    },
+    {
+      "filename": "y_f4_p0.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 131.0,
+      "saturated_fraction": 0.0,
+      "index": 18
+    },
+    {
+      "filename": "y_f4_p1.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 131.0,
+      "saturated_fraction": 0.0,
+      "index": 19
+    },
+    {
+      "filename": "y_f4_p2.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 131.0,
+      "saturated_fraction": 0.0,
+      "index": 20
+    },
+    {
+      "filename": "y_f4_p3.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 132.0,
+      "saturated_fraction": 0.0,
+      "index": 21
+    },
+    {
+      "filename": "y_f16_p0.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 22
+    },
+    {
+      "filename": "y_f16_p1.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 23
+    },
+    {
+      "filename": "y_f16_p2.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 24
+    },
+    {
+      "filename": "y_f16_p3.png",
+      "size": [
+        4024,
+        3036
+      ],
+      "p99": 73.0,
+      "saturated_fraction": 0.0,
+      "index": 25
+    }
+  ]
+}
