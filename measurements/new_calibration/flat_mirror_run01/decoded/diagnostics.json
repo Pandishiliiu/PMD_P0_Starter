@@ -1,0 +1,17 @@
+{
+  "input": "measurements\\new_calibration\\flat_mirror_run01",
+  "size": [
+    4024,
+    3036
+  ],
+  "valid_fraction": 0.1889,
+  "median_signal_on_valid": 186.0,
+  "range_u_valid": [
+    0.453125,
+    0.6604937314987183
+  ],
+  "range_v_valid": [
+    0.5911015272140503,
+    0.9041501879692078
+  ]
+}

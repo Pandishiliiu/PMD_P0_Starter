@@ -1,0 +1,13 @@
+{
+  "radius_mm": 131.2447915622775,
+  "radius_m": 0.1312447915622775,
+  "focal_length_mm": 65.62239578113875,
+  "sphere_fit_rms_um": 29.41603124808137,
+  "sphere_fit_p95_um": 59.600935289235196,
+  "sphere_fit_pv_um": 160.31854415362545,
+  "quadratic_radius_1_mm": 118.60019354187465,
+  "quadratic_radius_2_mm": 148.84376426016547,
+  "quadratic_rms_um": 5.0496794140278105,
+  "number_of_points": 1682,
+  "optimizer_success": true
+}

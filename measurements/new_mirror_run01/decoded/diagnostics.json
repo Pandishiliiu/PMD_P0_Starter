@@ -1,0 +1,11 @@
+{
+  "input": "measurements\\new_mirror_run01",
+  "size": [
+    4024,
+    3036
+  ],
+  "valid_fraction": 0.0,
+  "median_signal_on_valid": null,
+  "range_u_valid": null,
+  "range_v_valid": null
+}

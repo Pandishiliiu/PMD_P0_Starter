@@ -1,0 +1,20 @@
+{
+  "reference_plane_distance_mm": 376.62553914765783,
+  "height_anchor_mm": 0.0,
+  "valid_points": 45125,
+  "height_pv_mm": 2.005096546757856,
+  "detrended_rms_um": 558.3743321830843,
+  "detrended_pv_um": 1979.929432765648,
+  "best_fit_plane_coefficients": [
+    0.0008952946725464463,
+    0.00806038296867535,
+    0.17314794938906622
+  ],
+  "sphere_radius_mm": 98.83363976179028,
+  "sphere_focal_length_mm": 49.41681988089514,
+  "quadratic_R1_mm": 98.13563072720233,
+  "quadratic_R2_mm": 95.37184360883796,
+  "sphere_rms_um": 6.247710885314356,
+  "sphere_pv_um": 49.13780010193136,
+  "quadratic_rms_um": 4.9546690077102
+}

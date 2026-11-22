@@ -1,0 +1,17 @@
+{
+  "input": "measurements\\run01_original26",
+  "size": [
+    4024,
+    3036
+  ],
+  "valid_fraction": 0.0001,
+  "median_signal_on_valid": 207.0,
+  "range_u_valid": [
+    0.2448359578847885,
+    0.5831269025802612
+  ],
+  "range_v_valid": [
+    0.32867705821990967,
+    0.576713502407074
+  ]
+}
