@@ -1,0 +1,77 @@
+{
+  "points": 188162,
+  "extent_x_mm": 49.1882212536334,
+  "extent_y_mm": 38.31109217519108,
+  "raw_pv_um": 337.6865319128,
+  "detrended_pv_um": 174.82047492733636,
+  "detrended_rms_um": 38.81428826990973,
+  "gradient_edge_rms_um": 0.01326835340735146,
+  "plane_coeff": [
+    -0.002443565024552111,
+    -0.005121323053896754,
+    -0.3887641183043492
+  ],
+  "anchor_mm": 0.0,
+  "iterations": [
+    {
+      "iteration": 1,
+      "height_PV_mm": 0.20224335880173713,
+      "change_RMS_mm": 0.09738783467296061,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 2,
+      "height_PV_mm": 0.28356415134769336,
+      "change_RMS_mm": 0.03914794077463144,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 3,
+      "height_PV_mm": 0.3162582177746767,
+      "change_RMS_mm": 0.015741077474620054,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 4,
+      "height_PV_mm": 0.3293954269288359,
+      "change_RMS_mm": 0.006333808506599618,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 5,
+      "height_PV_mm": 0.3346946730531819,
+      "change_RMS_mm": 0.002532133103097424,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 6,
+      "height_PV_mm": 0.33681886269430744,
+      "change_RMS_mm": 0.0010243145229526644,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 7,
+      "height_PV_mm": 0.33768653191279996,
+      "change_RMS_mm": 0.0003983403873516842,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    }
+  ],
+  "sphere": {
+    "radius_mm": 2584.5135532023637,
+    "rms_um": 1.9543258119167701,
+    "pv_um": 18.954111344100966
+  },
+  "note": "P0 reconstruction: shape and radius depend on geometry and assumed depth.",
+  "quadratic": {
+    "R1_mm": 2640.9687034165745,
+    "R2_mm": 2516.7492673886336,
+    "rms_um": 1.3980641861118257
+  }
+}
