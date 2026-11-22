@@ -1,0 +1,91 @@
+{
+  "points": 180115,
+  "extent_x_mm": 55.76470353541093,
+  "extent_y_mm": 44.05142932360542,
+  "raw_pv_um": 1744.2811938458296,
+  "detrended_pv_um": 242.98340010914976,
+  "detrended_rms_um": 55.62606442966981,
+  "gradient_edge_rms_um": 0.1815897042467521,
+  "plane_coeff": [
+    -0.00032967865130446617,
+    0.03778350722549523,
+    3.9938040796685033
+  ],
+  "anchor_mm": 0.0,
+  "iterations": [
+    {
+      "iteration": 1,
+      "height_PV_mm": 1.06426580936679,
+      "change_RMS_mm": 0.47586638652426416,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 2,
+      "height_PV_mm": 1.4792700859843924,
+      "change_RMS_mm": 0.18569273609650006,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 3,
+      "height_PV_mm": 1.6410384428265026,
+      "change_RMS_mm": 0.07250332434465138,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 4,
+      "height_PV_mm": 1.7042894809382947,
+      "change_RMS_mm": 0.028311523077361563,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 5,
+      "height_PV_mm": 1.7289301820526932,
+      "change_RMS_mm": 0.011065272533970527,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 6,
+      "height_PV_mm": 1.7384991506828151,
+      "change_RMS_mm": 0.004328205160191235,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 7,
+      "height_PV_mm": 1.742294097934014,
+      "change_RMS_mm": 0.0016900117879245734,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 8,
+      "height_PV_mm": 1.7438599358406717,
+      "change_RMS_mm": 0.0006626383468026795,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    },
+    {
+      "iteration": 9,
+      "height_PV_mm": 1.7442811938458296,
+      "change_RMS_mm": 0.00029561753253624207,
+      "lsqr_stop": 7,
+      "lsqr_iterations": 1600
+    }
+  ],
+  "sphere": {
+    "radius_mm": 2172.3613250833932,
+    "rms_um": 8.281132603624208,
+    "pv_um": 47.81009761336463
+  },
+  "note": "P0 reconstruction: shape and radius depend on geometry and assumed depth.",
+  "quadratic": {
+    "R1_mm": 1994.8495170851825,
+    "R2_mm": 2425.2313607294104,
+    "rms_um": 2.9111010760995253
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "run_20261113_154127_6bd956",
+  "name": "气动反射镜_更大_未充气2",
+  "created_at": "2026-11-13T15:41:27+08:00",
+  "kind": "measurements",
+  "status": "reconstructed",
+  "calibration_id": "cal_20261113_145528_f052e6",
+  "calibration_name": "2026-11-13_气动反射光路1",
+  "pressure": "0kPa",
+  "notes": "快速验证",
+  "roi": null,
+  "source": "real",
+  "captured": true,
+  "decoded": true,
+  "reconstructed": true,
+  "updated_at": "2026-11-13T15:44:56+08:00",
+  "decode": {
+    "valid_pixels": 719811,
+    "valid_fraction": 0.9427113210067657,
+    "illuminated_pixels": 720345,
+    "coverage_of_bright_area": 0.9992586885450722,
+    "median_mod_x4": 66.844970703125,
+    "median_mod_y4": 60.153968811035156,
+    "decimation": 4,
+    "image_size": [
+      1006,
+      759
+    ],
+    "manual_roi_applied": false,
+    "manual_roi_fraction": null,
+    "u_range": [
+      0.3286101222038269,
+      0.7491711974143982
+    ],
+    "v_range": [
+      0.36762523651123047,
+      0.9223601222038269
+    ]
+  },
+  "reconstruction": {
+    "points": 180103,
+    "extent_x_mm": 53.98959519427731,
+    "extent_y_mm": 43.53755890722353,
+    "raw_pv_um": 821.731739937204,
+    "detrended_pv_um": 188.70804441301354,
+    "detrended_rms_um": 44.19294542256473,
+    "gradient_edge_rms_um": 0.023506803005464198,
+    "plane_coeff": [
+      -0.011882636693936563,
+      0.007315974389508183,
+      0.5142527936176465
+    ],
+    "anchor_mm": 0.0,
+    "iterations": [
+      {
+        "iteration": 1,
+        "height_PV_mm": 0.495998077986573,
+        "change_RMS_mm": 0.21265544213373286,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 2,
+        "height_PV_mm": 0.6928065873095587,
+        "change_RMS_mm": 0.08464991090468764,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 3,
+        "height_PV_mm": 0.7709224561991874,
+        "change_RMS_mm": 0.033683539160388354,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 4,
+        "height_PV_mm": 0.8018691754154865,
+        "change_RMS_mm": 0.013453182666554713,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 5,
+        "height_PV_mm": 0.8140930414239204,
+        "change_RMS_mm": 0.005387792440773113,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 6,
+        "height_PV_mm": 0.8190120442032738,
+        "change_RMS_mm": 0.002109394298068251,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 7,
+        "height_PV_mm": 0.8209475328223246,
+        "change_RMS_mm": 0.000850951566451507,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      },
+      {
+        "iteration": 8,
+        "height_PV_mm": 0.8217317399372039,
+        "change_RMS_mm": 0.000329920988567584,
+        "lsqr_stop": 7,
+        "lsqr_iterations": 1600
+      }
+    ],
+    "sphere": {
+      "radius_mm": 2547.7517546250992,
+      "rms_um": 2.23261460632397,
+      "pv_um": 13.674122384145448
+    },
+    "note": "P0 reconstruction: shape and radius depend on geometry and assumed depth.",
+    "quadratic": {
+      "R1_mm": 2608.6624724068397,
+      "R2_mm": 2435.124819146049,
+      "rms_um": 0.7366063290351857
+    }
+  }
+}
