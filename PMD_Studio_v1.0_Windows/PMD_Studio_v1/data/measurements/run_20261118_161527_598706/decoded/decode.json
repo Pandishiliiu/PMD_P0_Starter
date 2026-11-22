@@ -1,0 +1,23 @@
+{
+  "valid_pixels": 746373,
+  "valid_fraction": 0.9774986444966565,
+  "illuminated_pixels": 749212,
+  "coverage_of_bright_area": 0.996210685360085,
+  "median_mod_x4": 37.36642837524414,
+  "median_mod_y4": 30.92329216003418,
+  "decimation": 4,
+  "image_size": [
+    1006,
+    759
+  ],
+  "manual_roi_applied": false,
+  "manual_roi_fraction": null,
+  "u_range": [
+    0.14839588105678558,
+    0.6757007837295532
+  ],
+  "v_range": [
+    0.14344795048236847,
+    0.6815758943557739
+  ]
+}
