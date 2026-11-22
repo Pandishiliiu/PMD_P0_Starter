@@ -1,0 +1,15 @@
+﻿PMD Studio v1.0.6.1 — 缺失 studio.curvature 启动修复
+
+问题：ModuleNotFoundError: No module named 'studio.curvature'
+原因：v1.0.6 增量补丁依赖 v1.0.5 中新增的 curvature.py，现有目录缺少该文件。
+
+安装：关闭服务；解压后把 PMD_Studio_v1 文件夹合并到现有同名目录（不是再创建一层），仅新增 studio/curvature.py。
+
+目标：PMD_Studio_v1/studio/curvature.py
+
+验证（在 PMD_Studio_v1 的 PowerShell 窗口）：
+Test-Path .\studio\curvature.py
+& 'D:\Optoelectronics\激光刀口法测曲率\Phase Measuring Deflectometry\PMD_P0_Starter\.venv\Scripts\python.exe' -c "from studio.app import app; print('APP_IMPORT_OK')"
+.\start.bat
+
+不修改 app.py、标定数据、测量数据、UI、相机与图案显示配置。

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PMD Studio</title><link rel="stylesheet" href="/assets/style.css"></head>
+<body>
+<header><div class="brand">PMD Studio <small>v1.0.6 · 本地测量</small></div><div class="top-status"><span id="ipStatus">iPad —</span><span id="camStatus">相机 —</span><span id="modeBadge"></span></div></header>
+<nav id="tabs">
+<button data-tab="device" class="active">设备 · 条纹</button>
+<button data-tab="camera">相机</button>
+<button data-tab="measure">采集 · 结果</button>
+<button data-tab="calibrate">标定</button>
+</nav>
+<main>
+<section id="tab-device" class="tab active">
+ <div class="cols"><div class="panel grow"><h2>条纹预览</h2><canvas id="patternPreview" width="680" height="473"></canvas>
+  <div class="inline"><button class="secondary" id="patBlack">黑</button><button class="secondary" id="patWhite">白</button><button class="secondary" id="patX4">X · 4周期</button><button class="secondary" id="patY4">Y · 4周期</button><select id="patternSelect"></select><button id="patShow">显示到iPad</button></div>
+ </div><div class="panel settings"><h2>显示设置</h2><label>频率（周期数，含1和4）<input id="freqInput" value="1,4,16"></label>
+  <div class="two"><label>平均灰度<input type="number" id="brightness" value="128" min="0" max="255"></label><label>调制度<input type="number" id="contrast" value="100" min="0" max="127"></label></div>
+  <div class="two"><label>屏幕宽 (mm)<input type="number" id="screenW" value="227.06" step="0.01"></label><label>屏幕高 (mm)<input type="number" id="screenH" value="157.79" step="0.01"></label></div>
+  <button id="patApply">应用设置</button><div class="quiet" id="ipadDetail"></div>
+  <hr><h2>显示测试</h2><p class="quiet">在iPad Safari打开电脑局域网IP的 <code>http://电脑IP:8000/</code>。保持横屏、全屏、亮屏。</p>
+  <button class="secondary" id="patCheck">检查iPad连接</button>
+ </div></div>
+</section>
+<section id="tab-camera" class="tab">
+ <div class="cols"><div class="panel grow"><h2>相机画面</h2><div class="camera-box"><img id="cameraFrame" alt="相机未预览"></div><div class="quiet" id="frameInfo">未连接</div></div>
+  <div class="panel settings"><h2>相机控制</h2><div class="inline"><button id="camConnect">连接相机</button><button class="secondary" id="camDisconnect">断开</button></div>
+  <label>曝光时间 (µs)<input id="exposure" type="number" min="20" max="1000000" value="10000"></label><button id="camExposure">设置曝光</button>
+  <hr><div class="inline"><button id="camPreview">开始预览</button><button class="secondary" id="camPreviewOff">停止</button></div>
+  <button class="secondary" id="camSnapshot">单张测试拍摄</button><div class="quiet" id="cameraDetail"></div></div></div>
+</section>
+<section id="tab-measure" class="tab">
+ <div class="cols"><div class="panel settings"><h2>新建测量</h2>
+  <label>测量名称<input id="runName" placeholder="气动镜 · 未充气"></label>
+  <label>绑定标定<select id="runCal"></select></label>
+  <label>压力 / 状态<input id="pressure" placeholder="例如 0 kPa"></label>
+  <label>备注<input id="runNotes" placeholder="样品位置、气压、环境"></label>
+  <button id="createRun">创建数据单元</button>
+  <hr><h2>测量记录</h2><div id="runList" class="record-list"></div></div>
+  <div class="panel grow"><h2>当前测量 <span class="quiet" id="runSelected"></span></h2>
+  <div id="runEmpty" class="quiet">请选择或创建一个测量。</div>
+  <div id="runControls" hidden>
+   <div class="inline"><button id="captureRun">自动采集</button><button id="importRun" class="secondary">导入26张ZIP</button><input type="file" id="importRunFile" accept=".zip" hidden></div>
+   <details class="roi-panel" id="roiPanel" hidden>
+    <summary><strong>手动有效区域（Mask）</strong> <span class="quiet" id="roiStatus">未设置</span></summary>
+    <div class="inline roi-toolbar">
+      <label class="compact">模式<select id="roiMode"><option value="ellipse">椭圆拖拽</option><option value="polygon">多边形逐点</option></select></label>
+      <label class="compact">边缘内缩 (px)<input id="roiInset" type="number" min="0" max="150" value="12"></label>
+      <button class="secondary" id="roiFinish">闭合多边形</button>
+      <button class="secondary" id="roiUndo">撤销上一步</button>
+      <button class="secondary" id="roiClear">清空绘制</button>
+    </div>
+    <div class="quiet" id="roiHelp">在白图中拖拽椭圆，沿工作面内缘框选，避开外围反射环。</div>
+    <div class="roi-preview"><canvas id="roiCanvas" aria-label="白图与手动掩膜编辑器"></canvas></div>
+    <div class="inline"><button id="roiSave">保存掩膜</button><button class="secondary" id="roiReset">取消手动掩膜</button><button class="secondary" id="roiView">查看掩膜PNG</button><span class="quiet" id="roiInfo"></span></div>
+   </details>
+   <div class="inline"><button id="decodeRun">相位解码</button><label class="compact">中心高度 (mm)<input type="number" id="anchorHeight" value="0" step="0.5"></label><button id="reconstructRun">重建 · 拟合</button><button id="curvatureRun" class="secondary">双向曲率分析</button></div>
+   <div class="inline"><button class="secondary" id="openRunFolder">打开本次数据文件夹</button></div><div class="quiet" id="runDetail"></div>
+   <div class="results" id="runResults"></div>
+  </div></div></div>
+</section>
+<section id="tab-calibrate" class="tab">
+ <div class="cols"><div class="panel settings"><h2>新建标定</h2>
+  <label>标定名称<input id="calName" placeholder="当前光路 · 参考平面"></label>
+  <div class="two"><label>棋盘内角点 X<input id="boardX" type="number" value="9" min="2"></label><label>棋盘内角点 Y<input id="boardY" type="number" value="6" min="2"></label></div>
+  <label>单格尺寸 (mm)<input id="boardMM" type="number" value="4" step="0.1"></label><button id="createCal">创建标定</button>
+  <hr><h2>标定库</h2><div id="calList" class="record-list"></div></div>
+  <div class="panel grow"><h2>标定流程 <span id="calSelected" class="quiet"></span></h2>
+   <div id="calEmpty" class="quiet">请选择或创建一个标定。</div>
+   <div id="calControls" hidden>
+    <div class="step"><strong>1 · 相机内参</strong><span class="quiet">商业标定板：不同位置、距离和倾角拍摄18–25张；单格尺寸以厂家规格为准。</span>
+      <details class="intrinsic-tool">
+        <summary>采集与计算内参</summary>
+        <div class="two"><label>标定板类型<select id="intrBoardType"><option value="checkerboard">棋盘格（黑白方格）</option><option value="symmetric_circles">对称圆点阵</option><option value="asymmetric_circles">非对称圆点阵</option></select></label>
+        <label>点间距 / 方格边长 (mm)<input id="intrPitch" type="number" value="4" min="0.01" step="0.01"></label></div>
+        <div class="two"><label>列数（内角点/圆点）<input id="intrCols" type="number" value="9" min="3" max="32"></label>
+        <label>行数（内角点/圆点）<input id="intrRows" type="number" value="6" min="3" max="32"></label></div>
+        <label class="intr-check"><input type="checkbox" id="intrFixK3" checked> 固定三阶径向畸变 k3（推荐初试；若结果异常可取消勾选重新计算）</label>
+        <div class="inline"><button class="secondary" id="intrCapture">拍摄一张（调整姿态后再拍）</button>
+          <button class="secondary" id="intrUpload">上传已有多角度照片</button><input id="intrFiles" type="file" multiple accept=".png,.jpg,.jpeg,.bmp,.tif,.tiff" hidden>
+          <button id="intrSolve">计算内参</button><button class="secondary" id="intrPreview">检查角点预览</button></div>
+        <div class="quiet" id="intrCount">当前照片：—</div>
+        <pre class="stats" id="intrResult">尚未计算。</pre>
+      </details>
+      <div class="inline"><button class="secondary" id="calIntrBtn">导入内参NPZ</button><input type="file" id="calIntrFile" accept=".npz" hidden>
+        <button class="secondary" id="intrDownload">下载内参NPZ</button></div>
+      <span class="quiet">此步骤得到的 K、dist 自动用于本标定的参考平面和iPad位姿计算。与下一步的固定参考平面照片分开保存。</span></div>
+    <div class="step"><strong>2 · 棋盘格参考平面</strong><span class="quiet">与平面镜反射面共面，位置和法向应一致</span>
+      <div class="inline"><button class="secondary" id="calBoardPhoto">拍摄一张棋盘</button><button class="secondary" id="calBoardUpload">上传棋盘图片</button><input type="file" id="calBoardFiles" accept="image/*" multiple hidden><button id="calPlaneSolve">计算参考平面</button></div></div>
+    <div class="step"><strong>3 · 平面镜相移</strong><span class="quiet">相机和iPad不得移动</span>
+      <div class="inline"><button id="calFlatCapture">采集平面镜条纹</button><button class="secondary" id="calFlatImport">导入平面镜ZIP</button><input type="file" id="calFlatFile" accept=".zip" hidden></div></div>
+    <div class="step"><strong>4 · 屏幕位姿</strong><div class="inline"><button id="calSolve">计算并锁定标定</button></div>
+    </div><hr><div class="step"><strong>已有标定快速导入</strong><span class="quiet">可直接导入之前的 system_geometry_new.npz，不必重新采集</span>
+      <div class="inline"><button class="secondary" id="calGeoImport">导入完整几何NPZ并锁定</button><input type="file" id="calGeoFile" accept=".npz" hidden></div></div>
+    <div class="inline"><button class="secondary" id="openCalFolder">打开标定文件夹</button></div><pre id="calDetail" class="stats"></pre>
+   </div>
+  </div></div>
+</section>
+<section class="jobline" id="jobLine" hidden><div><strong id="jobTitle"></strong> <span id="jobMessage"></span></div><progress id="jobBar" max="1" value="0"></progress></section>
+<div id="notice" role="status"></div>
+</main><script src="/assets/app.js"></script></body></html>

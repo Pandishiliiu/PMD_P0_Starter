@@ -1,0 +1,21 @@
+{
+  "id": "cal_20261116_161725_df9972",
+  "name": "2026-11-16_with_Chessboard",
+  "created_at": "2026-11-16T16:17:25+08:00",
+  "kind": "calibrations",
+  "status": "created",
+  "board_inner": [
+    8,
+    11
+  ],
+  "square_mm": 3.0,
+  "screen_width_mm": 227.06,
+  "screen_height_mm": 157.79,
+  "screen_pixels": [
+    2360,
+    1640
+  ],
+  "plane": null,
+  "geometry_quality": null,
+  "ready": false
+}

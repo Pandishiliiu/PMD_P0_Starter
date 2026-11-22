@@ -1,0 +1,242 @@
+{
+  "resolution": [
+    2048,
+    1536
+  ],
+  "frames": [
+    {
+      "frame": 1,
+      "ipad_filename": "01_black.png",
+      "camera_filename": "black.png",
+      "name": "black",
+      "axis": null,
+      "cycles": 0,
+      "phase": 0
+    },
+    {
+      "frame": 2,
+      "ipad_filename": "02_white.png",
+      "camera_filename": "white.png",
+      "name": "white",
+      "axis": null,
+      "cycles": 0,
+      "phase": 0
+    },
+    {
+      "frame": 3,
+      "ipad_filename": "03_x_f1_p0.png",
+      "camera_filename": "x_f1_p0.png",
+      "name": "x_f1_p0",
+      "axis": "x",
+      "cycles": 1,
+      "phase": 0
+    },
+    {
+      "frame": 4,
+      "ipad_filename": "04_x_f1_p1.png",
+      "camera_filename": "x_f1_p1.png",
+      "name": "x_f1_p1",
+      "axis": "x",
+      "cycles": 1,
+      "phase": 1
+    },
+    {
+      "frame": 5,
+      "ipad_filename": "05_x_f1_p2.png",
+      "camera_filename": "x_f1_p2.png",
+      "name": "x_f1_p2",
+      "axis": "x",
+      "cycles": 1,
+      "phase": 2
+    },
+    {
+      "frame": 6,
+      "ipad_filename": "06_x_f1_p3.png",
+      "camera_filename": "x_f1_p3.png",
+      "name": "x_f1_p3",
+      "axis": "x",
+      "cycles": 1,
+      "phase": 3
+    },
+    {
+      "frame": 7,
+      "ipad_filename": "07_x_f4_p0.png",
+      "camera_filename": "x_f4_p0.png",
+      "name": "x_f4_p0",
+      "axis": "x",
+      "cycles": 4,
+      "phase": 0
+    },
+    {
+      "frame": 8,
+      "ipad_filename": "08_x_f4_p1.png",
+      "camera_filename": "x_f4_p1.png",
+      "name": "x_f4_p1",
+      "axis": "x",
+      "cycles": 4,
+      "phase": 1
+    },
+    {
+      "frame": 9,
+      "ipad_filename": "09_x_f4_p2.png",
+      "camera_filename": "x_f4_p2.png",
+      "name": "x_f4_p2",
+      "axis": "x",
+      "cycles": 4,
+      "phase": 2
+    },
+    {
+      "frame": 10,
+      "ipad_filename": "10_x_f4_p3.png",
+      "camera_filename": "x_f4_p3.png",
+      "name": "x_f4_p3",
+      "axis": "x",
+      "cycles": 4,
+      "phase": 3
+    },
+    {
+      "frame": 11,
+      "ipad_filename": "11_x_f16_p0.png",
+      "camera_filename": "x_f16_p0.png",
+      "name": "x_f16_p0",
+      "axis": "x",
+      "cycles": 16,
+      "phase": 0
+    },
+    {
+      "frame": 12,
+      "ipad_filename": "12_x_f16_p1.png",
+      "camera_filename": "x_f16_p1.png",
+      "name": "x_f16_p1",
+      "axis": "x",
+      "cycles": 16,
+      "phase": 1
+    },
+    {
+      "frame": 13,
+      "ipad_filename": "13_x_f16_p2.png",
+      "camera_filename": "x_f16_p2.png",
+      "name": "x_f16_p2",
+      "axis": "x",
+      "cycles": 16,
+      "phase": 2
+    },
+    {
+      "frame": 14,
+      "ipad_filename": "14_x_f16_p3.png",
+      "camera_filename": "x_f16_p3.png",
+      "name": "x_f16_p3",
+      "axis": "x",
+      "cycles": 16,
+      "phase": 3
+    },
+    {
+      "frame": 15,
+      "ipad_filename": "15_y_f1_p0.png",
+      "camera_filename": "y_f1_p0.png",
+      "name": "y_f1_p0",
+      "axis": "y",
+      "cycles": 1,
+      "phase": 0
+    },
+    {
+      "frame": 16,
+      "ipad_filename": "16_y_f1_p1.png",
+      "camera_filename": "y_f1_p1.png",
+      "name": "y_f1_p1",
+      "axis": "y",
+      "cycles": 1,
+      "phase": 1
+    },
+    {
+      "frame": 17,
+      "ipad_filename": "17_y_f1_p2.png",
+      "camera_filename": "y_f1_p2.png",
+      "name": "y_f1_p2",
+      "axis": "y",
+      "cycles": 1,
+      "phase": 2
+    },
+    {
+      "frame": 18,
+      "ipad_filename": "18_y_f1_p3.png",
+      "camera_filename": "y_f1_p3.png",
+      "name": "y_f1_p3",
+      "axis": "y",
+      "cycles": 1,
+      "phase": 3
+    },
+    {
+      "frame": 19,
+      "ipad_filename": "19_y_f4_p0.png",
+      "camera_filename": "y_f4_p0.png",
+      "name": "y_f4_p0",
+      "axis": "y",
+      "cycles": 4,
+      "phase": 0
+    },
+    {
+      "frame": 20,
+      "ipad_filename": "20_y_f4_p1.png",
+      "camera_filename": "y_f4_p1.png",
+      "name": "y_f4_p1",
+      "axis": "y",
+      "cycles": 4,
+      "phase": 1
+    },
+    {
+      "frame": 21,
+      "ipad_filename": "21_y_f4_p2.png",
+      "camera_filename": "y_f4_p2.png",
+      "name": "y_f4_p2",
+      "axis": "y",
+      "cycles": 4,
+      "phase": 2
+    },
+    {
+      "frame": 22,
+      "ipad_filename": "22_y_f4_p3.png",
+      "camera_filename": "y_f4_p3.png",
+      "name": "y_f4_p3",
+      "axis": "y",
+      "cycles": 4,
+      "phase": 3
+    },
+    {
+      "frame": 23,
+      "ipad_filename": "23_y_f16_p0.png",
+      "camera_filename": "y_f16_p0.png",
+      "name": "y_f16_p0",
+      "axis": "y",
+      "cycles": 16,
+      "phase": 0
+    },
+    {
+      "frame": 24,
+      "ipad_filename": "24_y_f16_p1.png",
+      "camera_filename": "y_f16_p1.png",
+      "name": "y_f16_p1",
+      "axis": "y",
+      "cycles": 16,
+      "phase": 1
+    },
+    {
+      "frame": 25,
+      "ipad_filename": "25_y_f16_p2.png",
+      "camera_filename": "y_f16_p2.png",
+      "name": "y_f16_p2",
+      "axis": "y",
+      "cycles": 16,
+      "phase": 2
+    },
+    {
+      "frame": 26,
+      "ipad_filename": "26_y_f16_p3.png",
+      "camera_filename": "y_f16_p3.png",
+      "name": "y_f16_p3",
+      "axis": "y",
+      "cycles": 16,
+      "phase": 3
+    }
+  ]
+}

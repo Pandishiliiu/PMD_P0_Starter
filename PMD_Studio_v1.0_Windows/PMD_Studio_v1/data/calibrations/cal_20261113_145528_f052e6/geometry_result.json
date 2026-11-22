@@ -1,0 +1,14 @@
+{
+  "inlier_fraction": 0.3972307692307692,
+  "inliers": 2582,
+  "sampled": 6500,
+  "median_reprojection_px": 5.496083235716123,
+  "p90_reprojection_px": 11.113113901204722,
+  "screen_origin_mm": [
+    -135.5155653297402,
+    -32.28446709907688,
+    122.60891496732052
+  ],
+  "camera_screen_same_side": true,
+  "warning": "系统几何误差较大；请检查平面镜与棋盘格共面"
+}

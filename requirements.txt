@@ -1,0 +1,6 @@
+numpy>=1.24,<3
+opencv-python>=4.8,<5
+matplotlib>=3.7
+Pillow>=10
+# Daheng gxipy API: prefer version bundled in your installed Galaxy SDK.
+# If missing: pip install iai-gxipy  (unofficial PyPI redistribution)

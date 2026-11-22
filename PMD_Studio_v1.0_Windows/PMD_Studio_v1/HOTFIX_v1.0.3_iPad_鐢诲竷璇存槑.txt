@@ -1,0 +1,17 @@
+PMD Studio v1.0.3 — iPad 画布高度修复
+
+故障：自动采集提示 2360 x 1592，要求 2360 x 1640。
+推断：iPad 10代物理分辨率 2360 x 1640，少了48个物理像素（24 CSS 点）；新版 iPad 页面的 apple-mobile-web-app-status-bar-style 错误设为 black，和先前成功使用的 black-translucent 不一致。后者允许在主屏幕应用模式下内容延展到系统状态栏底下。
+
+修复：把 web/ipad.html 的 status-bar-style 恢复为 black-translucent；并在 /api/status.browser 增加 standalone/screen_h 等诊断信息。
+注意：仍严格要求 2360 x 1640，绝不简单放宽校验，因为需要兼容已导入的旧屏幕几何标定。
+
+安装：
+1. 关闭 PMD Studio 服务器(Ctrl+C)。
+2. 解压本补丁到包含 PMD_Studio_v1 文件夹的上层目录，覆盖 web/ipad.html。
+3. 重新运行 start.bat。
+4. iPad：尽量通过「添加到主屏幕」生成的 PMD 图标启动，横屏打开。若旧图标仍旧维持 1592，可删除旧主屏幕图标、在 Safari 中重新添加，再通过新图标进入。
+5. PC：查看 http://127.0.0.1:8000/api/status ，确认 browser.width = 2360, browser.height = 1640。
+6. 再次开始采集。
+
+如果仍是 1592：请发回 /api/status 的 browser 信息（尤其 standalone, screen_w, screen_h, viewport_h）。这是浏览器渲染面积/运行模式问题，不能直接把标定屏幕高度改为 1592 来掩盖。

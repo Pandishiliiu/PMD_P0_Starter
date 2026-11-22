@@ -1,0 +1,180 @@
+'use strict';
+const $=id=>document.getElementById(id);
+const state={tab:'device',calibrations:[],runs:[],calId:null,runId:null,job:null,ipad:null,camera:null,patIndex:1};
+const post=async(url,body)=>api(url,body===undefined?{method:'POST'}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+async function api(url,opt={}){const res=await fetch(url,opt);let val;const ct=res.headers.get('content-type')||'';try{val=ct.includes('json')?await res.json():await res.text();}catch(e){val={detail:'无法解析服务器响应'};}
+if(!res.ok)throw new Error(val?.detail||`请求失败 ${res.status}`);return val;}
+function notice(message,isError=false){let node=$('notice');node.textContent=String(message);node.className=isError?'error':'';node.style.display='block';clearTimeout(notice.timer);notice.timer=setTimeout(()=>node.style.display='none',6200);}
+async function action(fn){try{await fn();}catch(e){notice(e.message||e,true);}}
+function fmt(v,d=2){return v===undefined||v===null||!Number.isFinite(Number(v))?'—':Number(v).toFixed(d);}
+function escapeHTML(t){return String(t??'').replace(/[&<>"']/g,a=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[a]));}
+function bind(id,cb){$(id).addEventListener('click',()=>action(cb));}
+function selectedRun(){return state.runs.find(x=>x.id===state.runId);}
+function selectedCal(){return state.calibrations.find(x=>x.id===state.calId);}
+function switchTab(tab){state.tab=tab;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.id==='tab-'+tab));syncCameraStream();}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+
+function patternDraw(){const s=state.ipad;if(!s)return;const plan=s.plan||[];const p=plan[state.patIndex]||plan[0];if(!p)return;
+const canvas=$('patternPreview'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,im=ctx.createImageData(W,H),config=s.config;
+let row=new Uint8ClampedArray(p.type==='fringe'?(p.axis==='x'?W:H):1);
+if(p.type==='black')row[0]=0;
+else if(p.type==='white')row[0]=255;
+else for(let i=0;i<row.length;i++)row[i]=config.brightness+config.contrast*Math.cos(2*Math.PI*(p.freq*i/row.length+p.phase/4));
+let a=im.data,off=0;
+for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+let v=row[p.type!=='fringe'?0:(p.axis==='x'?x:y)];a[off++]=v;a[off++]=v;a[off++]=v;a[off++]=255;}
+ctx.putImageData(im,0,0);}
+function updatePlan(s){let old=state.ipad?.plan?.map(x=>x.name).join(',');let fresh=s.plan.map(x=>x.name).join(',');state.ipad=s;
+if(old!==fresh){$('patternSelect').innerHTML='';s.plan.forEach((p,i)=>{let o=document.createElement('option');o.value=i;o.textContent=`${i}  ${p.name}`;$('patternSelect').append(o);});}
+state.patIndex=s.index;$('patternSelect').value=String(s.index);patternDraw();
+$('ipadDetail').textContent=`iPad：${s.connected?'已连接':'离线'}  ·  ${s.browser?.width??'—'}×${s.browser?.height??'—'} 像素  ·  图案 ${s.index+1}/${s.plan.length}`;
+}
+async function refreshSystem(){const sys=await api('/api/system');state.camera=sys.camera;
+$('ipStatus').textContent='iPad '+(sys.ipad.connected?'● 已连接':'○ 离线');
+$('camStatus').textContent='相机 '+(sys.camera.connected?'● 已连接':'○ 未连接');
+$('modeBadge').textContent=sys.demo?'模拟模式（不是真实测量）':'';
+$('frameInfo').textContent=`预览：${sys.camera.preview?'运行':'停止'}  ·  ${sys.camera.preview?fmt(sys.camera.preview_fps,1)+' fps  ·  ':''}曝光 ${fmt(sys.camera.exposure_us,0)} µs`;
+syncCameraStream();
+$('cameraDetail').textContent=sys.camera.last_error||`连接：${sys.camera.connected?'是':'否'}  /  自动采集：${sys.camera.acquiring?'运行中':'空闲'}`;
+updatePlan(sys.ipad);
+}
+function quickPattern(axis,freq){const s=state.ipad;if(!s)return;let index=s.plan.findIndex(p=>p.axis===axis&&p.freq===freq&&p.phase===0);
+if(index>=0)return patternSelect(index);notice('当前频率列表没有这个图案',true);}
+async function patternSelect(index){await post('/api/patterns/select',{index});await refreshSystem();}
+bind('patBlack',()=>patternSelect(0));bind('patWhite',()=>patternSelect(1));
+bind('patX4',()=>quickPattern('x',4));bind('patY4',()=>quickPattern('y',4));
+bind('patShow',()=>patternSelect(+$('patternSelect').value));
+$('patternSelect').addEventListener('change',()=>{state.patIndex=+$('patternSelect').value;patternDraw();});
+bind('patApply',async()=>{
+ const freqs=$('freqInput').value.split(/[\s,，]+/).filter(Boolean).map(Number);
+ await post('/api/patterns/config',{freqs,brightness:+$('brightness').value,contrast:+$('contrast').value,
+ screen_width_mm:+$('screenW').value,screen_height_mm:+$('screenH').value});
+ await refreshSystem();notice('显示设置已应用');});
+bind('patCheck',async()=>{await refreshSystem();let s=state.ipad;
+notice(s.connected?`iPad在线，画布 ${s.browser.width}×${s.browser.height}，${s.ack_rev===s.rev?'图案已渲染':'等待图案渲染'}`:
+'iPad离线：请在iPad中访问 http://电脑局域网IP:8000/ ，关闭旧服务后仅运行本程序。',!s.connected);});
+
+bind('camConnect',async()=>{await post('/api/camera/connect');await refreshSystem();notice('相机已连接');});
+bind('camDisconnect',async()=>{await post('/api/camera/disconnect');await refreshSystem();});
+bind('camExposure',async()=>{await post('/api/camera/exposure',{us:+$('exposure').value});await refreshSystem();notice('曝光已设置');});
+bind('camPreview',async()=>{await post('/api/camera/preview',{on:true});await refreshSystem();});
+bind('camPreviewOff',async()=>{await post('/api/camera/preview',{on:false});await refreshSystem();});
+bind('camSnapshot',async()=>{const out=await post('/api/camera/snapshot');notice(`已保存测试图片：${out.file}`);
+window.open('/api/camera/snapshot/'+encodeURIComponent(out.file),'_blank');});
+// Each MJPEG response contains successive frames. No repeated HTTP polling.
+function syncCameraStream(){
+ const el=$('cameraFrame');if(!el)return;
+ const want=state.tab==='camera' && !!state.camera?.preview;
+ if(want && el.dataset.live!=='1'){
+   el.dataset.live='1';
+   el.src='/api/camera/stream?ts='+Date.now();
+ }else if(!want && el.dataset.live==='1'){
+   el.dataset.live='0';
+   el.removeAttribute('src');
+ }
+}
+
+
+async function refreshData(){let [cs,rs]=await Promise.all([api('/api/calibrations'),api('/api/measurements')]);
+ state.calibrations=cs;state.runs=rs;
+ if(!state.calId&&cs.length)state.calId=cs[0].id;
+ if(!state.runId&&rs.length)state.runId=rs[0].id;
+ renderCals();renderRuns();}
+function renderCals(){let e=$('calList');e.innerHTML='';
+ for(let c of state.calibrations){let b=document.createElement('button');b.className='record'+(c.id===state.calId?' active':'');
+ b.innerHTML=`${escapeHTML(c.name)}<small>${escapeHTML(c.created_at)} · ${c.ready?'已锁定':'待完成'}</small>`;
+ b.onclick=()=>{state.calId=c.id;renderCals();};e.append(b);}
+ const list=$('runCal'),old=list.value;list.innerHTML='<option value="">选择已有标定</option>';
+ for(let c of state.calibrations.filter(c=>c.ready)){let o=document.createElement('option');o.value=c.id;o.textContent=c.name+' / '+c.id.slice(0,13);list.append(o);}
+ if([...list.options].some(o=>o.value===old))list.value=old;
+ else if(list.options.length>1)list.selectedIndex=1;
+ let cal=selectedCal();$('calControls').hidden=!cal;$('calEmpty').hidden=!!cal;
+ $('calSelected').textContent=cal?.id??'';
+ if(cal){
+ let p=cal.plane;let q=cal.geometry_quality;
+ let info=[`状态：${cal.ready?'可复用 · 已锁定':'待完成'}`,`内参：${cal.intrinsics?'已有':'未导入'}`,
+ `棋盘格：${cal.board_inner.join('×')} 内角点，${cal.square_mm} mm/格`,
+ `屏幕：${cal.screen_width_mm}×${cal.screen_height_mm} mm`,
+ p?`参考平面 d = ${fmt(p.d,3)} mm；PnP RMS ${fmt(p.median_pnp_rms_px,2)} px；有效图 ${p.num_used}/${p.num_valid}`:'参考平面：未计算',
+ q?`iPad标定：${q.mode==='imported'?'导入已有参数':`重投影中位数 ${fmt(q.median_reprojection_px,2)} px；内点率 ${fmt(q.inlier_fraction*100,1)}%`}`:'iPad位姿：未计算',
+ q?.warning||'',
+ p?.boards?.length? '棋盘格每张：\n'+p.boards.map(b=>`${b.file}: ${b.ok?'d='+fmt(b.d,2)+' mm  RMS='+fmt(b.rms_px,2)+' px'+(b.accepted?' [保留]':' [排除]'):'角点失败'}`).join('\n'):'' ];
+ $('calDetail').textContent=info.filter(Boolean).join('\n');
+ document.querySelectorAll('#calControls button').forEach(b=>{b.disabled=!!cal.ready&&b.id!=='openCalFolder';});
+ }
+}
+function renderRuns(){let e=$('runList');e.innerHTML='';
+ for(let r of state.runs){let b=document.createElement('button');b.className='record'+(r.id===state.runId?' active':'');
+ b.innerHTML=`${escapeHTML(r.name)}<small>${escapeHTML(r.created_at)} · ${escapeHTML(r.status)}${r.source==='demo'?' [模拟]':''}</small>`;
+ b.onclick=()=>{state.runId=r.id;renderRuns();};e.append(b);}
+ let run=selectedRun();$('runControls').hidden=!run;$('runEmpty').hidden=!!run;
+ $('runSelected').textContent=run?.id??'';
+ if(!run)return;
+ $('runDetail').textContent=`状态：${run.status}  ·  来源：${run.source==='demo'?'模拟数据（非真实实验）':run.source}  ·  压力：${run.pressure||'未记录'}  ·  标定：${run.calibration_name}\n数据单元：${run.id}\n标定参数已复制快照；不受标定库后续修改影响。`;
+ $('captureRun').disabled=!!run.captured;$('importRun').disabled=!!run.captured;
+ $('decodeRun').disabled=!run.captured;
+ $('reconstructRun').disabled=!run.decoded;
+ const d=run.decode, r=run.reconstruction;
+ let box=$('runResults');box.innerHTML='';
+ if(d){let p=document.createElement('p');p.className='quiet';p.textContent=`解码有效：${fmt(d.valid_fraction*100,1)}% · 亮区覆盖：${fmt(d.coverage_of_bright_area*100,1)}%`;box.append(p);
+  let img=document.createElement('img');img.src=`/api/measurements/${run.id}/file/decoded/mask.png?t=${Date.now()}`;img.alt='Mask';box.append(img);}
+ if(r){let m=document.createElement('div');m.className='metrics';
+ let vals=[['PV · 去平面',fmt(r.detrended_pv_um,2)+' µm'],['RMS · 去平面',fmt(r.detrended_rms_um,2)+' µm'],
+ ['球面半径',r.sphere?fmt(r.sphere.radius_mm,2)+' mm':'未拟合'],['球面残差 RMS',r.sphere?fmt(r.sphere.rms_um,2)+' µm':'—'],
+ ['有效点',String(r.points)],['X × Y',fmt(r.extent_x_mm,1)+' × '+fmt(r.extent_y_mm,1)+' mm']];
+ m.innerHTML=vals.map(([label,v])=>`<div class="metric"><b>${escapeHTML(v)}</b><small>${escapeHTML(label)}</small></div>`).join('');box.append(m);
+ for(let file of ['height_detrended.png','height_3d.png','sphere_residual.png']){
+  let img=document.createElement('img');img.alt=file;img.src=`/api/measurements/${run.id}/file/reconstruction/${file}?t=${Date.now()}`;
+  if(file==='sphere_residual.png'&&!r.sphere)continue;box.append(img);
+ }
+ let link=document.createElement('p');link.innerHTML=`<a target="_blank" href="/api/measurements/${run.id}/file/reconstruction/points.csv">导出点云CSV</a>　·　<a target="_blank" href="/api/measurements/${run.id}/file/reconstruction/shape.npz">NPZ数据</a>　·　<a target="_blank" href="/api/measurements/${run.id}/file/reconstruction/result.json">结果JSON</a>`;box.append(link);
+ }
+}
+async function createCal(){let c=await post('/api/calibrations',{name:$('calName').value,board_inner:[+$('boardX').value,+$('boardY').value],square_mm:+$('boardMM').value,
+ screen_width_mm:+$('screenW').value,screen_height_mm:+$('screenH').value});state.calId=c.id;await refreshData();notice('标定已建立');}
+bind('createCal',createCal);
+bind('createRun',async()=>{let cal=$('runCal').value;if(!cal)throw new Error('请先选择已完成的标定');
+let r=await post('/api/measurements',{name:$('runName').value,calibration_id:cal,pressure:$('pressure').value,notes:$('runNotes').value});
+state.runId=r.id;await refreshData();notice('测量数据单元已创建，并已固定标定快照');});
+
+async function upload(endpoint,file,field='file'){
+ if(!file)throw new Error('未选中文件');let form=new FormData();form.append(field,file);
+ return api(endpoint,{method:'POST',body:form});}
+async function uploadMany(endpoint,files){if(!files?.length)throw new Error('请先选择图片');let form=new FormData();for(let f of files)form.append('files',f);
+return api(endpoint,{method:'POST',body:form});}
+function requireCal(){if(!state.calId)throw new Error('请先选择标定');return state.calId;}
+function requireRun(){if(!state.runId)throw new Error('请先选择测量');return state.runId;}
+$('calIntrBtn').onclick=()=>$('calIntrFile').click();
+$('calGeoImport').onclick=()=>$('calGeoFile').click();
+$('calBoardUpload').onclick=()=>$('calBoardFiles').click();
+$('calFlatImport').onclick=()=>$('calFlatFile').click();
+$('importRun').onclick=()=>$('importRunFile').click();
+$('calIntrFile').onchange=()=>action(async()=>{await upload(`/api/calibrations/${requireCal()}/intrinsics`,$('calIntrFile').files[0]);await refreshData();notice('内参已导入');});
+$('calGeoFile').onchange=()=>action(async()=>{await upload(`/api/calibrations/${requireCal()}/geometry/import`,$('calGeoFile').files[0]);await refreshData();notice('完整标定已导入并锁定');});
+$('calBoardFiles').onchange=()=>action(async()=>{let r=await uploadMany(`/api/calibrations/${requireCal()}/board/upload`,$('calBoardFiles').files);notice('已导入棋盘图片：'+r.saved.length);});
+$('calFlatFile').onchange=()=>action(async()=>{await upload(`/api/calibrations/${requireCal()}/flat/import`,$('calFlatFile').files[0]);await refreshData();notice('平面镜相移图已导入');});
+$('importRunFile').onchange=()=>action(async()=>{await upload(`/api/measurements/${requireRun()}/raw/import`,$('importRunFile').files[0]);await refreshData();notice('原始相移图已导入');});
+bind('calBoardPhoto',async()=>{let r=await post(`/api/calibrations/${requireCal()}/board/capture`);notice(`已保存 ${r.filename}。改变棋盘位置时务必保持镜面共面。`);});
+bind('calPlaneSolve',async()=>{let r=await post(`/api/calibrations/${requireCal()}/board/solve`);await refreshData();notice(`参考平面 d = ${fmt(r.d,2)} mm`);});
+bind('calSolve',async()=>{let r=await post(`/api/calibrations/${requireCal()}/solve`);await refreshData();notice(`iPad几何标定完成；重投影中位数 ${fmt(r.geometry.median_reprojection_px,2)} px`);});
+
+async function startJob(url,body){const j=await post(url,body);state.job=j.id;$('jobLine').hidden=false;await refreshData();}
+bind('calFlatCapture',()=>startJob(`/api/calibrations/${requireCal()}/flat/capture`));
+bind('captureRun',()=>startJob(`/api/measurements/${requireRun()}/capture`));
+bind('decodeRun',()=>startJob(`/api/measurements/${requireRun()}/decode`));
+bind('reconstructRun',()=>startJob(`/api/measurements/${requireRun()}/reconstruct`,{anchor_mm:+$('anchorHeight').value}));
+bind('openRunFolder',async()=>{await post(`/api/measurements/${requireRun()}/open-folder`);});
+bind('openCalFolder',async()=>{await post(`/api/calibrations/${requireCal()}/open-folder`);});
+async function pollJob(){if(!state.job)return;try{let j=await api('/api/jobs/'+state.job);$('jobTitle').textContent=j.label;
+$('jobMessage').textContent=j.message;$('jobBar').value=j.progress;
+if(j.status!=='running'){state.job=null;setTimeout(()=>$('jobLine').hidden=true,2200);await refreshData();
+ if(j.status==='error')notice(j.error,true);else notice('任务完成');}}
+catch(e){notice(e.message,true);state.job=null;}}
+setInterval(()=>{pollJob().catch(()=>{});},650);
+setInterval(()=>{refreshSystem().catch(()=>{});},1700);
+async function main(){await Promise.all([refreshSystem(),refreshData()]);$('freqInput').value=state.ipad.config.freqs.join(',');
+$('brightness').value=state.ipad.config.brightness;$('contrast').value=state.ipad.config.contrast;
+$('screenW').value=state.ipad.config.screen_width_mm;$('screenH').value=state.ipad.config.screen_height_mm;
+$('exposure').value=state.camera.exposure_us;}
+main().catch(e=>notice('后端连接失败：'+e.message,true));

@@ -1,0 +1,110 @@
+{
+  "id": "cal_20261116_164542_2664fc",
+  "name": "2026-11-16_with_Chessboard_4",
+  "created_at": "2026-11-16T16:45:42+08:00",
+  "kind": "calibrations",
+  "status": "ready",
+  "board_inner": [
+    8,
+    11
+  ],
+  "square_mm": 3.0,
+  "screen_width_mm": 227.06,
+  "screen_height_mm": 157.79,
+  "screen_pixels": [
+    2360,
+    1640
+  ],
+  "plane": {
+    "n": [
+      0.029067610156636635,
+      0.16317103154336382,
+      0.986169502927796
+    ],
+    "d": -340.4984169767822,
+    "num_used": 3,
+    "num_valid": 3,
+    "distance_std_mm": 0.306808302687101,
+    "normal_max_dev_deg": 0.5017206180743609,
+    "median_pnp_rms_px": 4.185822486877441,
+    "boards": [
+      {
+        "file": "board_01.png",
+        "ok": true,
+        "n": [
+          0.02299300336812603,
+          0.15774624033980392,
+          0.9872119556887317
+        ],
+        "d": -340.92514036445993,
+        "rms_px": 2.64920711517334,
+        "accepted": true
+      },
+      {
+        "file": "board_02.png",
+        "ok": true,
+        "n": [
+          0.03616610297981087,
+          0.16746175423682513,
+          0.9852149886512989
+        ],
+        "d": -340.21703054697747,
+        "rms_px": 4.26816463470459,
+        "accepted": true
+      },
+      {
+        "file": "board_03.png",
+        "ok": true,
+        "n": [
+          0.028041697188076344,
+          0.16429372185989902,
+          0.9860127971665654
+        ],
+        "d": -340.3530800189091,
+        "rms_px": 4.185822486877441,
+        "accepted": true
+      }
+    ]
+  },
+  "geometry_quality": {
+    "inlier_fraction": 0.35707692307692307,
+    "inliers": 2321,
+    "sampled": 6500,
+    "median_reprojection_px": 6.238062811805603,
+    "p90_reprojection_px": 12.090404444792556,
+    "screen_origin_mm": [
+      -100.68670634194031,
+      -42.755538758908955,
+      20.008257254703267
+    ],
+    "camera_screen_same_side": true,
+    "warning": "系统几何误差较大；请检查平面镜与棋盘格共面"
+  },
+  "ready": true,
+  "intrinsics": true,
+  "updated_at": "2026-11-16T16:49:11+08:00",
+  "flat_captured": true,
+  "decode_quality": {
+    "valid_pixels": 192868,
+    "valid_fraction": 0.25259248199865364,
+    "illuminated_pixels": 612852,
+    "coverage_of_bright_area": 0.31470567118978154,
+    "median_mod_x4": 65.62202453613281,
+    "median_mod_y4": 55.30144500732422,
+    "decimation": 4,
+    "image_size": [
+      1006,
+      759
+    ],
+    "manual_roi_applied": false,
+    "manual_roi_fraction": null,
+    "u_range": [
+      0.33504945039749146,
+      0.5643073320388794
+    ],
+    "v_range": [
+      0.2310999184846878,
+      0.5741321444511414
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>PMD screen</title><style>*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000}canvas{display:block;width:100vw;height:100vh;touch-action:none}</style></head>
+<body><canvas id="fringes"></canvas><script>
+'use strict';
+const canvas=document.getElementById('fringes');const ctx=canvas.getContext('2d',{alpha:false});
+let lastRev=-1;let state=null;let drawing=false;
+async function post(url,data){await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),cache:'no-store'});}
+function dimensions(){
+ const dpr=window.devicePixelRatio||1;
+ const standalone=(window.navigator.standalone===true||window.matchMedia('(display-mode: standalone)').matches);
+ return {width:Math.round(window.innerWidth*dpr),height:Math.round(window.innerHeight*dpr),dpr,
+         viewport_w:window.innerWidth,viewport_h:window.innerHeight,
+         screen_w:window.screen.width,screen_h:window.screen.height,
+         standalone:standalone,visual_viewport_h:window.visualViewport?.height??null};
+}
+function draw(st){
+  if(drawing)return;drawing=true;
+  try{
+    let size=dimensions();canvas.width=size.width;canvas.height=size.height;
+    const W=canvas.width,H=canvas.height;let im=ctx.createImageData(W,H),bytes=im.data;
+    let pat=st.pattern,cfg=st.config,grey=new Uint8ClampedArray(pat.type==='fringe'?(pat.axis==='x'?W:H):1);
+    if(pat.type==='black'){grey[0]=0;}
+    else if(pat.type==='white'){grey[0]=255;}
+    else{
+      let n=grey.length;
+      for(let i=0;i<n;i++) grey[i]=cfg.brightness+cfg.contrast*Math.cos(2*Math.PI*(pat.freq*i/n+pat.phase/4));
+    }
+    let offset=0;
+    if(pat.type!=='fringe'||pat.axis==='y'){
+      for(let y=0;y<H;y++){let v=grey[pat.type==='fringe'?y:0];for(let x=0;x<W;x++){bytes[offset++]=v;bytes[offset++]=v;bytes[offset++]=v;bytes[offset++]=255;}}
+    }else{
+      for(let y=0;y<H;y++){for(let x=0;x<W;x++){let v=grey[x];bytes[offset++]=v;bytes[offset++]=v;bytes[offset++]=v;bytes[offset++]=255;}}
+    }
+    ctx.putImageData(im,0,0);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      post('/api/ack',{rev:st.rev,index:st.index,browser:dimensions()}).catch(()=>{});
+    }));
+    lastRev=st.rev;
+  }finally{drawing=false;}
+}
+async function poll(){
+  try{let res=await fetch('/api/state?ts='+Date.now(),{cache:'no-store'});
+  if(!res.ok)throw new Error('Network');let st=await res.json();state=st;
+  let size=dimensions();
+  if(st.rev!==lastRev||canvas.width!==size.width||canvas.height!==size.height)draw(st);
+  }catch(e){}finally{setTimeout(poll,220);}}
+window.addEventListener('resize',()=>{lastRev=-1;});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)lastRev=-1;});
+poll();
+</script></body></html>

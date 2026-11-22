@@ -1,0 +1,25 @@
+{
+  "method": "Reference-plane slope integration, four-neighbor least squares",
+  "disclaimer": "Self-calibrated shape residual, NOT independent surface accuracy",
+  "input_normals": 55033,
+  "reliable_largest_component": 53690,
+  "adjacent_edges": 106849,
+  "normal_outlier_threshold_deg": 0.2,
+  "lsqr_stop_code": 2,
+  "lsqr_iterations": 1117,
+  "extent_x_mm": 24.651595274374408,
+  "extent_y_mm": 24.406053924891125,
+  "reference_relative": {
+    "rms_um": 0.37632912290745196,
+    "pv_um": 2.099982412735964,
+    "min_um": -1.0815812281892194,
+    "max_um": 1.0184011845467444
+  },
+  "best_fit_plane_removed": {
+    "rms_um": 0.2839070642624084,
+    "pv_um": 1.761149751560613,
+    "min_um": -0.77307973746002,
+    "max_um": 0.9880700141005928
+  },
+  "best_fit_tilt_deg": 0.0023066111661359657
+}

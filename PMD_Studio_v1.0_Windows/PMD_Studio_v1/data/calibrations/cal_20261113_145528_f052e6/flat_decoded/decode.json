@@ -1,0 +1,21 @@
+{
+  "valid_pixels": 162136,
+  "valid_fraction": 0.21234385518247564,
+  "illuminated_pixels": 367439,
+  "coverage_of_bright_area": 0.4412596376541412,
+  "median_mod_x4": 67.7587661743164,
+  "median_mod_y4": 61.28825378417969,
+  "decimation": 4,
+  "image_size": [
+    1006,
+    759
+  ],
+  "u_range": [
+    0.53125,
+    0.7715026140213013
+  ],
+  "v_range": [
+    0.42879945039749146,
+    0.7301316261291504
+  ]
+}

@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>*{box-sizing:border-box}html,body{margin:0;padding:0;overflow:hidden;background:#808080;width:100%;height:100%;touch-action:none}
+#c{position:absolute;inset:0;display:block;width:100vw;height:100vh;image-rendering:pixelated}
+#msg{position:absolute;top:20px;left:20px;font:20px sans-serif;padding:15px;background:#000b;color:#fff;border-radius:10px}
+</style></head><body><canvas id="c"></canvas><div id="msg">PMD P0 iPad display<br>Start server and capture.py on PC.<br>Use landscape. Add to Home Screen for fullscreen.</div>
+<script>
+const cv=document.getElementById('c'), ctx=cv.getContext('2d',{alpha:false}); let drawn=-2, width=0,height=0,lastPattern=null;
+async function ack(i){await fetch('/api/ack',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({index:i,width,height,dpr:devicePixelRatio||1,viewport_w:innerWidth,viewport_h:innerHeight})});}
+function render(p,i){
+  const dpr=window.devicePixelRatio||1; width=Math.round(window.innerWidth*dpr); height=Math.round(window.innerHeight*dpr);
+  cv.width=width;cv.height=height;cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+  if(i===-1){ctx.fillStyle='#808080';ctx.fillRect(0,0,width,height);document.getElementById('msg').style.display='block';return;}
+  document.getElementById('msg').style.display='none';
+  if(!p.axis){ctx.fillStyle=p.name==='white'?'#f5f5f5':'#101010';ctx.fillRect(0,0,width,height);return;}
+  // Stripe coordinate is the true canvas raster coordinate (not an assumed iPad model resolution).
+  const v=new Uint8ClampedArray(4*width*height); const N=p.axis==='x'?width:height;
+  const lut=new Uint8Array(N);
+  for(let j=0;j<N;j++) lut[j]=Math.round(128+100*Math.cos(2*Math.PI*(p.cycles*j/N+p.phase/4)));
+  for(let y=0;y<height;y++) for(let x=0;x<width;x++){
+    let k=4*(y*width+x),z=lut[p.axis==='x'?x:y];v[k]=z;v[k+1]=z;v[k+2]=z;v[k+3]=255;
+  }
+  ctx.putImageData(new ImageData(v,width,height),0,0);
+}
+async function poll(){
+ try{
+  const r=await fetch('/api/state',{cache:'no-store'});const d=await r.json();
+  let newW=Math.round(innerWidth*(devicePixelRatio||1)),newH=Math.round(innerHeight*(devicePixelRatio||1));
+  if(d.index!==drawn||newW!==width||newH!==height){render(d.pattern,d.index);drawn=d.index;lastPattern=d.pattern;await ack(d.index)}
+ }catch(e){document.getElementById('msg').style.display='block'}
+ setTimeout(poll,250);
+}
+poll();
+window.addEventListener('resize',()=>{drawn=-2});
+</script></body></html>
